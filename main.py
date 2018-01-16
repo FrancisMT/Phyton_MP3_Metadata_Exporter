@@ -1,11 +1,12 @@
 import eyed3
-
 from os import path
 from tkinter import filedialog
 
 
+# Python Threading Tutorial https://stackoverflow.com/questions/16199793/simple-threading-event-example
 class SongData:
-    # private
+    """Store Song Data and Metada Information"""
+
     __path = ""
 
     __title = ""
@@ -32,7 +33,7 @@ class SongData:
               "Artist: {1}\n"
               "Album: {2}\n"
               "Genre: {3}\n"
-              "Year: {4}"
+              "Year: {4}\n"
               .format
               (self.__title,
                self.__artist,
@@ -44,10 +45,12 @@ class SongData:
 def main():
     current_path = path.dirname(path.realpath(__file__))
 
-    filename = filedialog.askopenfilename(initialdir=current_path, title="Select file",
-                                          filetypes=[("mp3 files", "*.mp3")])
-    new_song_data = SongData(filename)
-    new_song_data.print_song_metadata()
+    song_paths = filedialog.askopenfilenames(initialdir=current_path, title="Select file",
+                                             filetypes=[("mp3 files", "*.mp3")])
+
+    for song_path in song_paths:
+        new_song_data = SongData(song_path)
+        new_song_data.print_song_metadata()
 
 
 if __name__ == '__main__':
